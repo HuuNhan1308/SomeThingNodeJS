@@ -4,6 +4,7 @@
   "description": "Hoho personal blog",
   "main": "src/index.js",
   "scripts": {
+    "watch": "node-sass --watch src/resource/scss/ --output src/public/css/",
     "start": "nodemon --inspect src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
