@@ -1,4 +1,3 @@
-
 const path = require('path');
 const express = require('express');
 const morgan = require('morgan');
@@ -13,7 +12,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(morgan('combined'));
 
 // Template Engine
-app.engine('hbs', handlebars.engine({extname: '.hbs'}));
+app.engine('hbs', handlebars.engine({ extname: '.hbs' }));
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'resource/view'));
 
