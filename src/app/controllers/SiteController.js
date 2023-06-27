@@ -1,7 +1,12 @@
+const Course = require('../models/Courses');
+
 class SiteController {
     //[GET] /
+
     index(req, res) {
-        res.render('home');
+        Course.find({}).then((courses) => {
+            res.json(courses);
+        });
     }
 
     //[GET] slug
