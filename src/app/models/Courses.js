@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
+const slug = require('mongoose-slug-updater');
 
 const Schema = mongoose.Schema;
-const slug = require('mongoose-slug-generator');
 mongoose.plugin(slug);
 
 const Course = new Schema(

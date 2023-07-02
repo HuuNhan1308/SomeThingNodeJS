@@ -20,8 +20,6 @@ class CourseController {
         formData.image = `https://i.ytimg.com/vi/${req.body.videoID}/hq720.jpg`;
         const course = new Course(formData);
         course.save().then(res.redirect('/')).catch(next);
-
-        res.send('Course save');
     }
 
     //[GET] /courses/:id/edit
@@ -41,6 +39,12 @@ class CourseController {
         Course.updateOne({ _id: req.params.id }, updatedCourse).then(() =>
             res.redirect('/me/stored/courses'),
         );
+    }
+
+    destroy(req, res, next) {
+        Course.deleteOne({ _id: req.params.id })
+            .then(() => res.redirect('back'))
+            .catch(next);
     }
 }
 

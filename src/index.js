@@ -17,7 +17,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // HTTP Logger
-app.use(morgan('combined'));
+// app.use(morgan('combined'));
 
 // Template Engine
 app.engine(
@@ -39,4 +39,4 @@ app.use(methodOverride('_method'));
 route(app);
 
 // LISTEN
-app.listen(3000, () => console.log`App express js on port: 3000`);
+app.listen(8080, () => console.log`App express js on port: 8080`);

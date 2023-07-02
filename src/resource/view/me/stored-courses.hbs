@@ -1,30 +1,72 @@
 <div class="mt-4">
 
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Tên khoá học</th>
-      <th scope="col">Trình độ</th>
-      <th scope="col">Thơi gian tạo</th>
-      <th scope="col"></th>
-      <th scope="col"></th>
-    </tr>
-  </thead>
-  <tbody>
-    {{#each courses}}
-    <tr>
-      <th scope="row">{{sum @key 1}}</th>
-      <td>{{this.name}}</td>
-      <td>{{this.level}}</td>
-      <td>{{this.createdAt}}</td>
-      <td><a class="btn btn-primary" role="button" href="/courses/{{this._id}}/edit">Sửa</a></td>
-      <td><button type="button" class="btn btn-danger">
-        <a href="/" class="link-underline-light link-underline-opacity-0 text-black fw-bolde d-block">Xoá</a>
-      </button></td>
-    </tr>
-    {{/each}}
-  </tbody>
-</table>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Tên khoá học</th>
+        <th scope="col">Trình độ</th>
+        <th scope="col">Thời gian tạo</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each courses}}
+      <tr>
+        <th scope="row">{{sum @key 1}}</th>
+        <td>{{this.name}}</td>
+        <td>{{this.level}}</td>
+        <td>{{this.createdAt}}</td>
+        <td><a class="btn btn-primary" role="button" href="/courses/{{this._id}}/edit">Sửa</a></td>
+        <td><button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-id="{{this._id}}" data-bs-target="#staticBackdrop">
+          Xoá
+        </button></td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+
+  <!-- Modal -->
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5 text-dark" id="staticBackdropLabel">Xoá  </h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Bạn có chắc chắn muốn xoá khoá học này?
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="btn-delete-modal" class="btn btn-danger">Xoá bỏ</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Huỷ</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 </div>
+
+<form method="POST" name="deleteCourseForm"></form>
+
+<script>
+  const staticBackdrop = document.getElementById('staticBackdrop');
+  const btnDeleteModal = document.getElementById('btn-delete-modal');
+  const deleteCourseForm = document.forms['deleteCourseForm'];
+  let courseId;
+  let button;
+
+
+  staticBackdrop.addEventListener('show.bs.modal', event => {
+    button = event.relatedTarget
+    courseId = button.getAttribute('data-bs-id');
+  })
+
+  btnDeleteModal.onclick = (event) => {
+    deleteCourseForm.action = `/courses/${courseId}?_method=DELETE`;
+    deleteCourseForm.submit();
+  }
+
+
+</script>
