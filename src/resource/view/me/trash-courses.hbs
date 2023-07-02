@@ -1,7 +1,7 @@
 <div class="mt-4">
 
-  <h3>DANH SÁCH KHOÁ HỌC</h3>
-  <a href="/me/trash/courses">Thùng rác</a>
+  <h3>THÙNG RÁC</h3>
+  <a href="/me/stored/courses">Quay lại</a>
 
   <table class="table mt-4">
     <thead>
@@ -21,18 +21,13 @@
         <td>{{this.name}}</td>
         <td>{{this.level}}</td>
         <td>{{this.createdAt}}</td>
-        <td><a class="btn btn-primary" role="button" href="/courses/{{this._id}}/edit">Sửa</a></td>
+        <td><a class="btn btn-primary js-restore-btn" id="restore-btn" data-bs-id="{{this._id}}" role="button" href="">Khôi phục</a></td>
         <td><button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-id="{{this._id}}" data-bs-target="#staticBackdrop">
-          Xoá
+          Xoá vĩnh viễn
         </button></td>
       </tr>
-      {{else}}
-        <tr>
-          <td>
-            Bạn chưa đăng khoá học nào
-            <a href="/courses/create">Đăng khoá học</a>
-          </td>
-        </tr>
+
+      
       {{/each}}
     </tbody>
   </table>
@@ -42,14 +37,14 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5 text-dark" id="staticBackdropLabel">Xoá  </h1>
+          <h1 class="modal-title fs-5 text-dark" id="staticBackdropLabel">Xoá</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          Bạn có chắc chắn muốn xoá khoá học này?
+          Hành động này không thể khôi phục, bạn vẫn muốn xoá khoá học này?
         </div>
         <div class="modal-footer">
-          <button type="button" id="btn-delete-modal" class="btn btn-danger">Xoá bỏ</button>
+          <button type="button" id="btn-delete-modal" class="btn btn-danger">Xoá</button>
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Huỷ</button>
         </div>
       </div>
@@ -59,11 +54,16 @@
 </div>
 
 <form method="POST" name="deleteCourseForm"></form>
+<form method="POST" name="restoreCourseForm"></form>
 
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script>
+
   const staticBackdrop = document.getElementById('staticBackdrop');
   const btnDeleteModal = document.getElementById('btn-delete-modal');
   const deleteCourseForm = document.forms['deleteCourseForm'];
+  const restoreCourseForm = document.forms['restoreCourseForm'];
+  const restoreBtns = $('.js-restore-btn');
   let courseId;
   let button;
 
@@ -74,9 +74,17 @@
   })
 
   btnDeleteModal.onclick = (event) => {
-    deleteCourseForm.action = `/courses/${courseId}?_method=DELETE`;
+    deleteCourseForm.action = `/courses/${courseId}/force?_method=DELETE`;
     deleteCourseForm.submit();
   }
 
+  restoreBtns.click(function(e) {
+    e.preventDefault();
+    
+    const courseId = $(this).data('bs-id');
+    
+    restoreCourseForm.action = `/courses/${courseId}/restore?_method=PATCH`;
+    restoreCourseForm.submit();
+  })
 
 </script>
