@@ -9,7 +9,7 @@
         <th scope="col">#</th>
         <th scope="col">Tên khoá học</th>
         <th scope="col">Trình độ</th>
-        <th scope="col">Thời gian tạo</th>
+        <th scope="col">Thời gian xoá</th>
         <th scope="col"></th>
         <th scope="col"></th>
       </tr>
@@ -20,10 +20,10 @@
         <th scope="row">{{sum @key 1}}</th>
         <td>{{this.name}}</td>
         <td>{{this.level}}</td>
-        <td>{{this.createdAt}}</td>
+        <td>{{this.deletedAt}}</td>
         <td><a class="btn btn-primary js-restore-btn" id="restore-btn" data-bs-id="{{this._id}}" role="button" href="">Khôi phục</a></td>
         <td><button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-id="{{this._id}}" data-bs-target="#staticBackdrop">
-          Xoá vĩnh viễn
+          Xoá
         </button></td>
       </tr>
 
